@@ -1,5 +1,7 @@
 package hashtable;
 
+import java.util.Arrays;
+import java.util.List;
 
 public class HashTable {
 
@@ -13,23 +15,23 @@ public class HashTable {
 
     public int hash(String input){
         char[] inputArr = input.toCharArray();
-        int a = 33;
+        int a = 31;
+
         //hash code w polynomial
         int hashCode = 0;
         int i = 1;
         for(char x : inputArr){
-            hashCode += (int)x * Math.pow(a,i);
+            hashCode += (((int)x * Math.pow(a,i)) % 1000000007) % table.length;
             i ++;
         }
 
-        //compression function w linear probing
+        //compression function w linear probing for collision
         int x = 1;
-        int arraySpot = (hashCode + x) % size;
+        int arraySpot = (hashCode + x) % table.length;
         while(table[arraySpot] !=  null) {
-            if(size > table.length){
-                resizeTable();
-            }
             x++;
+            arraySpot = (hashCode + x) % table.length;
+
         }
 
         return arraySpot;
@@ -38,18 +40,39 @@ public class HashTable {
 
     public void resizeTable(){
         String[] tableCopy = table.clone(); 
-        //prime 2 ^ x-1
-        int tableLength = (int)Math.pow(2, table.length - 1);
+        int tableLength = (table.length * 2 + 1);
         table = new String[tableLength];
-        System.arraycopy(tableCopy, 0, table, 0, tableCopy.length);
+        for(int i = 0 ; i < tableCopy.length; i++){
+            if(tableCopy[i] != null){
+                insert(tableCopy[i]);
+                size--;
+            }
+        }
+
+
     }
 
     public void insert(String input){
         table[hash(input)] = input;
         size++;
+        if(size > table.length/2){
+            resizeTable();
+        }
     }
 
     public int size(){
         return size;
+    }
+
+    public boolean contains(String word){
+        List<String> temp = Arrays.asList(table);
+        return temp.contains(word);
+    }
+
+    public void printItems(){
+        int i;
+        for(i = 0; i < table.length; i++){
+            System.out.println(table[i]);
+        }
     }
 }
