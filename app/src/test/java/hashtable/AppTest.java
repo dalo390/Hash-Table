@@ -6,21 +6,31 @@ package hashtable;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.FileNotFoundException;
+
 class AppTest {
-    @Test void hashTableHasTable() {
+    @Test void hashTableIsEmpty() {
         HashTable classUnderTest = new HashTable();
         assertEquals(0, classUnderTest.size());
     }
 
-    @Test void hashTable() {
+    @Test void hashTableHasElements() {
         HashTable classUnderTest = new HashTable();
-        assertEquals(0, classUnderTest.size());
+        classUnderTest.insert("alpha");
+        classUnderTest.insert("beta");
+        classUnderTest.insert("gamma");
+        assertEquals(3, classUnderTest.size());
     }
 
-    // @Test void textParseTest() {
-    //     TextParsing classUnderTest = new TextParsing();
-    //     assertNotEquals(void.class, classUnderTest.parseFile("..\\resources\\groceries.txt"));
-    // }
+    @Test void textParseTest() throws FileNotFoundException {
+        TextParsing classUnderTest = new TextParsing();
+        assertEquals(14, classUnderTest.parseFile(".\\src\\main\\resources\\groceries.txt"));
+    }
+
+    @Test void textAnagramTest() throws FileNotFoundException {
+        TextParsing classUnderTest = new TextParsing();
+        assertEquals(13, classUnderTest.parseAnagram(".\\src\\main\\resources\\groceries.txt"));
+    }
 
 
 }

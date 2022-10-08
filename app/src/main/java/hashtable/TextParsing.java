@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class TextParsing {
-    public void parseFile(String filePath) throws FileNotFoundException {
+    public int parseFile(String filePath) throws FileNotFoundException {
         HashTable table = new HashTable();
         
         File file = new File(filePath); 
@@ -21,11 +21,10 @@ public class TextParsing {
         }
 
         sc.close();
-        System.out.println("DONE");
-        System.out.println(table.size());
+        return(table.size());
     }
 
-    public void parseAnagram(String filePath) throws FileNotFoundException {
+    public int parseAnagram(String filePath) throws FileNotFoundException {
         HashTable table = new HashTable();
         
         File file = new File(filePath); 
@@ -45,9 +44,9 @@ public class TextParsing {
         }
 
         sc.close();
-        System.out.println("DONE");
-        System.out.println(table.size());
         table.printItems();
+
+        return table.size();
     }
 
     public static void main(String[] args) throws FileNotFoundException {

@@ -48,8 +48,6 @@ public class HashTable {
                 size--;
             }
         }
-
-
     }
 
     public void insert(String input){
